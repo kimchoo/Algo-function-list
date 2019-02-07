@@ -1,0 +1,42 @@
+def model_1(data_h, data_l):
+
+  dominant = None
+  line_approach = False
+  
+  d_positive = False
+  d_negative = False
+  u_positive = False
+  u_negative = False
+  
+  offset = 1
+  
+  aroondown, aroonup = AROON(data_h,data_l, timerperiod=14)
+  
+  if aroonup[0] > aroondown[0]:
+    dominant = True
+  elif aroonup[0] < aroondown[0]:
+    dominant = False
+  else:
+    dominant = None
+    
+  if aroondown[offset] > aroondown[0]:
+    d_negative = True
+    
+  elif aroondown[offset] < aroondown[0]:
+    d_positive = True
+    
+  if aroonup[offset] > aroonup[0]:
+    u_negative = True
+   
+  elif aroonup[offset] < aroonup[0]:
+    u_positive = True
+    
+  if (u_positive == True and d_negative == True) or (u_negative == True and d_positive):
+    line_approach = True
+    
+  if line_approach == True and dominant == True:
+    return False
+  elif line_approach == True and dominant == False:
+    retunr True
+  else:
+    return None
